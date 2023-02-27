@@ -1,7 +1,57 @@
-h2 {
-  color: blue;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-h2 {
-  color: red;
+html {
+  font-size: 62.5%;
+}
+
+.main-data {
+  padding: 3rem;
+  width: 60%;
+  margin: auto;
+  border: 2px solid orange;
+}
+
+.inputs{
+  width: fit-content;
+}
+
+.outputs {
+  border-bottom: 2px solid rgb(95, 94, 94);
+  padding: 1rem;
+  width: 100%;
+}
+
+.title-input,
+.author-input,
+.title-show,
+.author-show {
+  font-size: 1.5rem;
+  margin: 1.5rem 0;
+  padding: 1rem;
+}
+
+.add-btn,
+.rmv-btn {
+  border: none;
+  background-color: rgb(114, 111, 111);
+  font-size: 2rem;
+  padding: 1rem;
+  width: 100%;
+  margin: 1.5rem 0 0 0;
+  cursor: pointer;
+}
+
+input::placeholder {
+  font-size: 1.7rem;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
