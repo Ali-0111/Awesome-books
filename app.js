@@ -1,50 +1,77 @@
-
 // constructor for object
 class Book {
+  KEY='data';
 
-    constructor() {
-        this.collection  = [];
-        this.ul = document.querySelector('.lst');
-        this.title = document.querySelector('.title-input');
-        this.author = document.querySelector('.author-input'); 
-        this.addBtn =  document.querySelector('.add-btn');
-        this.fx;
-    }
+  constructor() {
+    this.collection = this.collectionMethod();
+    this.ul = document.querySelector('.lst');
+    this.title = document.querySelector('.title-input');
+    this.author = document.querySelector('.author-input');
+    this.addBtn = document.querySelector('.add-btn');
+  }
 
-    saveLocal(arr,key) {
-        localStorage.setItem(key,JSON.stringify(arr));
-    }
+  collectionMethod() {
+    const data = localStorage.getItem(this.KEY);
+    return data ? JSON.parse(data) : [];
+  }
 
-    createList(newBook) {
-        const li = document.createElement('li');
-        li.innerHTML = `
+  saveLocal(arr) {
+    localStorage.setItem(this.KEY, JSON.stringify(arr));
+  }
+
+  getfromLocal() {
+    const arr = JSON.parse(localStorage.getItem(this.KEY));
+    return arr;
+  }
+
+  clearPlaceHolder() {
+    this.title.value = '';
+    this.author.value = '';
+  }
+
+  removeBtn(e) {
+    const li = e.target.parentElement;
+    this.collection = this.collection.filter((book) => book.title !== li.id);
+    this.saveLocal(this.collection);
+    li.remove();
+  }
+
+  createList(element) {
+    // const newBook = this.getfromLocal();
+    const newBook = element;
+    const li = document.createElement('li');
+    li.innerHTML = `
         <h2 class="title-show">${newBook.title}</h2>
         <p class="author-show">${newBook.author}</p>
-        <button class="rmv-btn">Remove</button>
         `;
-        this.ul.appendChild(li);
-        this.fx = document.querySelectorAll('.rmv-btn');
-        // remove the text from input box
-    }
-    create () {
-        // DOM  for inputs
-        const newBook = {title: this.title.value, author: this.author.value }       
-         console.log(newBook, 'I created');
-        this.collection.push(newBook);
-        // return collection;
-       this.createList(newBook);
-    }
-   
-};
-const start = new Book();
-start.addBtn.addEventListener ('click', ()=> {
-    start.create();
-    start.fx.forEach((btn,i)=>{
-        btn.addEventListener('click', ()=>{
-            console.log(btn,i);
-        });
+    li.id = `${newBook.title}`;
+    const rmvBtn = document.createElement('button');
+    rmvBtn.className = 'rmv-btn';
+    rmvBtn.innerText = 'Remove';
+    li.append(rmvBtn);
+    rmvBtn.addEventListener('click', (e) => {
+      this.removeBtn(e);
     });
-});
+    this.ul.appendChild(li);
+    this.clearPlaceHolder();
+  }
 
+  create() {
+    // DOM  for inputs
+    const newBook = { title: this.title.value, author: this.author.value };
+    this.collection.push(newBook);
+    this.createList(newBook);
+    // return collection;
+  }
+}
 
-
+window.onload = () => {
+  const start = new Book();
+  start.addBtn.addEventListener('click', () => {
+    start.create();
+    start.saveLocal(start.collection, this.key);
+  });
+  start.collection.forEach((element) => {
+    start.createList(element);
+  });
+};

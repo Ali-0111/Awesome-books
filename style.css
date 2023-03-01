@@ -19,8 +19,9 @@ ul {
   border: 2px solid orange;
 }
 
-.inputs{
+.inputs {
   width: fit-content;
+  order: 1;
 }
 
 .outputs {
@@ -50,7 +51,6 @@ ul {
   font-size: 2rem;
   padding: 1rem;
   width: 100%;
-  margin: 1.5rem 0 0 0;
   cursor: pointer;
 }
 
@@ -69,6 +69,8 @@ input::placeholder {
   order: 2;
 }
 
-.inputs {
-  order: 1;
+li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid gray;
+  width: 20rem;
 }
